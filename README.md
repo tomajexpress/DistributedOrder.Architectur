@@ -18,15 +18,11 @@ The system consists of four primary components designed to work seamlessly in a 
 
 ## 🛠️ Tech Stack
 
-✅ **Frontend:** Blazor WebAssembly (WASM)
-
-✅ **Gateway:** Ocelot API Gateway
-
-✅ **Security:** OpenID Connect (OIDC), OAuth2, JWT Bearer Tokens
-
-✅ **Backend:** ASP.NET Core Web API
-
-✅ **Auth Provider:** Duende IdentityServer
+* **Frontend:** Blazor WebAssembly (WASM)
+* **Gateway:** Ocelot API Gateway
+* **Security:** OpenID Connect (OIDC), OAuth2, JWT Bearer Tokens
+* **Backend:** ASP.NET Core Web API
+* **Auth Provider:** Duende IdentityServer
 
 ## 🚀 Getting Started
 To run this project locally, the components must be started in a specific order to ensure discovery endpoints and security handshakes are available.
