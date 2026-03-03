@@ -1,0 +1,3 @@
+@ApiGateway.Ocelot_HostAddress = http://localhost:5208
+
+###

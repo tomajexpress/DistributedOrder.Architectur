@@ -1,0 +1,16 @@
+<Solution>
+  <Folder Name="/docker/" />
+  <Folder Name="/Src/">
+    <Project Path="Src/IdentityServer.Host/IdentityServer.Host.csproj" />
+  </Folder>
+  <Folder Name="/Src/Clients/">
+    <Project Path="Src/Clients/Web.BlazorClient/Web.BlazorClient.csproj" />
+  </Folder>
+  <Folder Name="/Src/Gateways/">
+    <Project Path="Src/Gateways/ApiGateway.Ocelot/ApiGateway.Ocelot.csproj" Id="137443e7-adc7-4835-8c24-7c46231b5965" />
+  </Folder>
+  <Folder Name="/Src/Services/">
+    <Project Path="Src/Services/Order.API/Order.API.csproj" Id="298d0d18-c085-408c-afa5-cd3f7d461cfd" />
+  </Folder>
+  <Folder Name="/tests/" />
+</Solution>

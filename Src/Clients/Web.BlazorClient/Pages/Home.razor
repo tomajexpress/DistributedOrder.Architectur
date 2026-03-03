@@ -1,0 +1,97 @@
+﻿@page "/"
+@using Microsoft.AspNetCore.Components.Authorization
+@inject HttpClient Http
+
+<PageTitle>OrderFlow - API Test</PageTitle>
+
+<div class="container mt-4">
+    <h1>Welcome to the OrderFlow Platform</h1>
+
+    <AuthorizeView>
+        <Authorized>
+            <div class="alert alert-info shadow-sm">
+                <strong>Logged in as:</strong> @context.User.Identity?.Name
+            </div>
+
+            <div class="card shadow-sm mt-3">
+                <div class="card-body">
+                    <h5 class="card-title">Order API Test via Gateway</h5>
+                    <p class="card-text text-muted">Click the button below to retrieve orders through the Ocelot Gateway.</p>
+
+                    <button class="btn btn-primary btn-lg" @onclick="FetchOrdersFromGateway" disabled="@isSearching">
+                        @if (isSearching)
+                        {
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            <span> Loading...</span>
+                        }
+                        else
+                        {
+                            <span>Fetch Orders</span>
+                        }
+                    </button>
+
+                    <hr />
+
+                    @if (!string.IsNullOrEmpty(errorMessage))
+                    {
+                        <div class="alert alert-danger">
+                            <strong>Error:</strong> @errorMessage
+                        </div>
+                    }
+
+                    @if (orders != null)
+                    {
+                        <ul class="list-group">
+                            @foreach (var order in orders)
+                            {
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    @order
+                                    <span class="badge bg-success rounded-pill">Active</span>
+                                </li>
+                            }
+                        </ul>
+                    }
+                </div>
+            </div>
+        </Authorized>
+
+        <NotAuthorized>
+            <div class="alert alert-warning">
+                Please log in to test the API features.
+            </div>
+        </NotAuthorized>
+    </AuthorizeView>
+</div>
+
+@code {
+    private string[]? orders;
+    private bool isSearching = false;
+    private string? errorMessage;
+
+    private async Task FetchOrdersFromGateway()
+    {
+        isSearching = true;
+        errorMessage = null;
+        orders = null;
+
+        try
+        {
+            // The route defined in ocelot.json
+            // The AuthorizationMessageHandler automatically attaches the JWT token
+            orders = await Http.GetFromJsonAsync<string[]>("gateway/orders/GetAllOrders");
+        }
+        catch (HttpRequestException ex)
+        {
+            errorMessage = $"API Error: {ex.StatusCode} - {ex.Message}";
+            Console.WriteLine($"Fetch error: {ex}");
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Unexpected Error: {ex.Message}";
+        }
+        finally
+        {
+            isSearching = false;
+        }
+    }
+}
